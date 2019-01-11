@@ -19,20 +19,22 @@
 </div>
 
 <script type="text/javascript">
-
 $(document).ready(function() {
     $('#retrieve').click(function () {
         $('#embed-tweet-here').empty();
-        $.get('https://3t2l2ug9si.execute-api.us-east-1.amazonaws.com/prod/doggos?rating='
-            + $('#rating').val())
-            .done(function(json) {
+        var url = 'https://xx.execute-api.us-west-2.amazonaws.com/default/doggos'
+		
+		$.get(url, {"outOf":10, "rating": $('#rating').val()}, function(json){
+			if (json.error) {
+                alert(json.error);
+            } else {
                 let tweetNumber = json.tweet.match(/\/(\d+)$/)[1];
-                console.log(tweetNumber);
-                twttr.widgets.createTweet(tweetNumber, document.getElementById('embed-tweet-here'));
-            });
+            console.log(tweetNumber);
+            twttr.widgets.createTweet(tweetNumber, document.getElementById('embed-tweet-here'));
+            }
+		  });
     });
 });
-
 </script>
 </body>
 </html>
